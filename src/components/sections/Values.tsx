@@ -1,27 +1,30 @@
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { VALUES } from "@/data/content";
+import { ESG } from "@/data/content";
 
 export function Values() {
   return (
-    <section className="section section--light" id="values">
+    <section className="section section--light" id="impact">
       <Container>
         <Reveal>
           <SectionHeading
-            label="ESG Commitments"
+            label="ESG"
             title="How We Deliver Responsibly"
-            description="Environmental integrity, community partnership and skills transfer — built into every project from day one."
+            description="Clear commitments on environment, people and community — built into every project."
             center
           />
         </Reveal>
 
-        <div className="values-grid">
-          {VALUES.map((value, i) => (
-            <Reveal key={value.num} as="article" className="value-card" delay={i * 100}>
-              <span className="value-num">{value.num}</span>
-              <h3>{value.title}</h3>
-              <p>{value.description}</p>
+        <div className="esg-grid">
+          {ESG.map((column, i) => (
+            <Reveal key={column.title} as="article" className="esg-card" delay={i * 80}>
+              <h3>{column.title}</h3>
+              <ul>
+                {column.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </Reveal>
           ))}
         </div>

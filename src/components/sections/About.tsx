@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Container } from "@/components/ui/Container";
-import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { ABOUT_BODY, ABOUT_FEATURES, PILLARS, SITE } from "@/data/content";
+import { PILLARS, SITE } from "@/data/content";
 
 function SolarPanelVisual() {
   const [lit, setLit] = useState<Set<number>>(() => new Set());
@@ -67,9 +66,7 @@ export function About() {
           <div className="section-label">Who We Are</div>
           <h2 className="section-title">Rwandan-Led Independent Power Producer</h2>
           <p className="section-desc">{SITE.description}</p>
-          <p className="section-desc" style={{ marginTop: 12 }}>
-            {ABOUT_BODY.intro}
-          </p>
+          <p className="section-desc section-desc--tight">{SITE.partnerLine}</p>
 
           <div className="mission-grid">
             <div className="mission-card">
@@ -82,28 +79,9 @@ export function About() {
             </div>
           </div>
 
-          <ul className="feature-list">
-            {ABOUT_FEATURES.map((f) => (
-              <li key={f.title}>
-                <div className="feature-icon">
-                  <Icon name={f.icon} />
-                </div>
-                <div>
-                  <h3>{f.title}</h3>
-                  <p>{f.description}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          <dl className="fact-list">
-            {ABOUT_BODY.facts.map((fact) => (
-              <div key={fact.label} className="fact-item">
-                <dt>{fact.label}</dt>
-                <dd>{fact.value}</dd>
-              </div>
-            ))}
-          </dl>
+          <p className="about-meta">
+            {SITE.legalName} · {SITE.registered}
+          </p>
         </Reveal>
       </Container>
     </section>

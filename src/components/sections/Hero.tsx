@@ -35,20 +35,7 @@ function StatCard({
   );
 }
 
-function LiveChart() {
-  const [points, setPoints] = useState(() =>
-    Array.from({ length: 32 }, () => 30 + Math.random() * 30),
-  );
-  const [kw, setKw] = useState("42.8");
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setPoints((prev) => [...prev.slice(1), 18 + Math.random() * 40]);
-      setKw((38 + Math.random() * 10).toFixed(1));
-    }, 900);
-    return () => window.clearInterval(id);
-  }, []);
-
+function EnergySparkline({ points }: { points: number[] }) {
   const w = 320;
   const h = 80;
   const step = w / (points.length - 1);
@@ -58,26 +45,40 @@ function LiveChart() {
   const area = `${line} L${w},${h} L0,${h} Z`;
 
   return (
-    <div className="hero-chart">
-      <div className="chart-header">
-        <span>Energy Output</span>
-        <span className="chart-value">{kw} MW</span>
-      </div>
-      <svg className="chart-svg" viewBox="0 0 320 80" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#3DB87A" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="#3DB87A" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <path d={area} fill="url(#chartFill)" />
-        <path d={line} fill="none" stroke="#3DB87A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </div>
+    <svg className="chart-svg" viewBox="0 0 320 80" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#3DB87A" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="#3DB87A" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path d={area} fill="url(#chartFill)" />
+      <path
+        d={line}
+        fill="none"
+        stroke="#3DB87A"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
 export function Hero() {
+  const [points, setPoints] = useState<number[]>(() =>
+    [28, 36, 22, 48, 34, 55, 30, 42, 25, 50, 38, 58, 32, 45, 27, 52, 35, 48, 29, 44, 33, 56, 31, 47, 26, 53, 37, 49, 30, 46, 34, 40],
+  );
+  const [liveKw, setLiveKw] = useState("40.6");
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setPoints((prev) => [...prev.slice(1), 18 + Math.random() * 40]);
+      setLiveKw((38 + Math.random() * 10).toFixed(1));
+    }, 900);
+    return () => window.clearInterval(id);
+  }, []);
+
   return (
     <section className="hero" id="home">
       <div className="hero-bg" aria-hidden="true">
@@ -98,7 +99,7 @@ export function Hero() {
             <br />
             <em>Africa&apos;s Future</em>
           </h1>
-          <p className="hero-lead">{SITE.description}</p>
+          <p className="hero-lead">{SITE.heroDescription}</p>
           <div className="hero-actions">
             <Button href="#services">Explore Services</Button>
             <Button href="#contact" variant="ghost">
@@ -111,15 +112,24 @@ export function Hero() {
           <div className="hero-panel-top">
             <span className="panel-label">Delivery Snapshot</span>
             <span className="panel-status">
-              <span className="pulse" /> Active
+              <span className="pulse" aria-hidden="true" />
+              ACTIVE
             </span>
           </div>
+
           <div className="hero-stats">
             {HERO_STATS.map((stat) => (
               <StatCard key={stat.label} {...stat} />
             ))}
           </div>
-          <LiveChart />
+
+          <div className="hero-chart">
+            <div className="chart-header">
+              <span>Energy Output</span>
+              <span className="chart-value">{liveKw} MW</span>
+            </div>
+            <EnergySparkline points={points} />
+          </div>
         </Reveal>
       </Container>
 
