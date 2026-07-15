@@ -5,10 +5,15 @@ import { VALUES } from "@/data/content";
 
 export function Values() {
   return (
-    <section className="section section--muted" id="values">
+    <section className="section section--light" id="values">
       <Container>
         <Reveal>
-          <SectionHeading label="Our Foundation" title="Why G3 Stands Apart" center />
+          <SectionHeading
+            label="ESG Commitments"
+            title="How We Deliver Responsibly"
+            description="Environmental integrity, community partnership and skills transfer — built into every project from day one."
+            center
+          />
         </Reveal>
 
         <div className="values-grid">

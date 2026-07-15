@@ -68,7 +68,8 @@ export function Contact() {
             Let&apos;s Build Africa&apos;s Energy Future Together
           </h2>
           <p className="section-desc section-desc--light">
-            Whether you are an investor, government body, DFI partner, or contractor — we want to hear from you.
+            Investors, utilities, DFIs, government partners and technology collaborators — we want to
+            hear from you.
           </p>
 
           <ul className="contact-list">

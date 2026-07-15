@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { ABOUT_FEATURES, PILLARS } from "@/data/content";
+import { ABOUT_BODY, ABOUT_FEATURES, PILLARS, SITE } from "@/data/content";
 
 function SolarPanelVisual() {
   const [lit, setLit] = useState<Set<number>>(() => new Set());
@@ -37,8 +37,8 @@ function SolarPanelVisual() {
       </div>
       <div className="solar-panel__shine" />
       <div className="solar-panel__badge">
-        <strong>100%</strong>
-        <span>Renewable</span>
+        <strong>IPP</strong>
+        <span>Solar PV</span>
       </div>
     </div>
   );
@@ -65,10 +65,23 @@ export function About() {
 
         <Reveal className="about-content" delay={100}>
           <div className="section-label">Who We Are</div>
-          <h2 className="section-title">Africa&apos;s Next-Generation Energy Company</h2>
-          <p className="section-desc">
-            G3 Energy International Ltd is incorporated in Rwanda and built to scale across the African continent. We develop, finance, build, and operate utility-scale solar power plants in partnership with national governments, development finance institutions, and global technology partners.
+          <h2 className="section-title">Rwandan-Led Independent Power Producer</h2>
+          <p className="section-desc">{SITE.description}</p>
+          <p className="section-desc" style={{ marginTop: 12 }}>
+            {ABOUT_BODY.intro}
           </p>
+
+          <div className="mission-grid">
+            <div className="mission-card">
+              <span>Vision</span>
+              <p>{SITE.vision}</p>
+            </div>
+            <div className="mission-card">
+              <span>Mission</span>
+              <p>{SITE.mission}</p>
+            </div>
+          </div>
+
           <ul className="feature-list">
             {ABOUT_FEATURES.map((f) => (
               <li key={f.title}>
@@ -82,6 +95,15 @@ export function About() {
               </li>
             ))}
           </ul>
+
+          <dl className="fact-list">
+            {ABOUT_BODY.facts.map((fact) => (
+              <div key={fact.label} className="fact-item">
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
         </Reveal>
       </Container>
     </section>

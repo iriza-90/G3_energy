@@ -48,9 +48,9 @@ export function Impact() {
       <Container>
         <Reveal>
           <SectionHeading
-            label="Our Impact"
+            label="Market Context"
             title="Numbers That Matter"
-            description="Every megawatt we generate is a step towards universal energy access across Africa."
+            description="Figures from published Government of Rwanda planning documents — and from projects already delivered."
             light
           />
         </Reveal>

@@ -19,3 +19,6 @@ yarn-debug.log*
 yarn-error.log*
 tsconfig.tsbuildinfo
 next-env.d.ts
+
+# large local assets (keep offline)
+*.pdf

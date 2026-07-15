@@ -39,8 +39,10 @@ export function Footer() {
       </Container>
 
       <Container className="footer-bottom">
-        <p>© {new Date().getFullYear()} {SITE.name} Ltd. Registered in Rwanda.</p>
-        <p className="footer-tagline">G3EI · Powering Africa&apos;s Future</p>
+        <p>
+          © {SITE.profileYear} {SITE.legalName} · Registered in Rwanda
+        </p>
+        <p className="footer-tagline">{SITE.tagline}</p>
         <p>{SITE.email}</p>
       </Container>
     </footer>

@@ -91,7 +91,7 @@ export function Hero() {
         <Reveal className="hero-copy">
           <div className="eyebrow">
             <span className="eyebrow-dot" />
-            Est. 2025 · Kigali, Rwanda
+            Independent Power Producer · Kigali, Rwanda · {SITE.profileYear}
           </div>
           <h1 className="hero-title">
             Powering
@@ -109,7 +109,7 @@ export function Hero() {
 
         <Reveal className="hero-panel" delay={150}>
           <div className="hero-panel-top">
-            <span className="panel-label">Live Project Data</span>
+            <span className="panel-label">Delivery Snapshot</span>
             <span className="panel-status">
               <span className="pulse" /> Active
             </span>

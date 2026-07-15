@@ -10,9 +10,9 @@ export function Services() {
       <Container>
         <Reveal>
           <SectionHeading
-            label="What We Do"
-            title="Our Core Services"
-            description="End-to-end solar infrastructure — from development and finance to construction, operations, and continental expansion."
+            label="Full Asset Lifecycle"
+            title="From Greenfield to 25-Year Operations"
+            description="Development and regulatory work led by our Rwandan team; engineering, construction and equipment supply through our strategic partner's certified capabilities."
             light
           />
         </Reveal>
