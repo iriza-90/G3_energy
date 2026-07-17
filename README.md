@@ -53,14 +53,19 @@ src/
 - External links use `rel="noopener noreferrer"`
 - React escapes output by default (XSS mitigation)
 
-## Deploy
+## Contact form email
 
-Recommended: **Vercel** (zero-config for Next.js).
+The contact form posts to `/api/contact`, which sends mail through [Resend](https://resend.com).
+
+1. Create a free Resend account and an API key  
+2. Set these environment variables (local `.env.local` and/or Vercel):
 
 ```bash
-npx vercel
+RESEND_API_KEY=re_xxxx
+CONTACT_TO_EMAIL=you@yourdomain.com
+RESEND_FROM_EMAIL=G3 Energy <onboarding@resend.dev>
 ```
 
-Or any Node host (`npm run build && npm run start`).
+3. For production, verify your domain in Resend and switch `RESEND_FROM_EMAIL` to something like `G3 Energy <noreply@g3energy.com>`
 
-Copy `.env.example` → `.env.local` for contact settings.
+Until those vars are set, the form shows an error instead of a fake “sent” success.
