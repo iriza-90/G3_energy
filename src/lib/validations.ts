@@ -32,9 +32,13 @@ export const contactSchema = z.object({
   enquiryType: enquiryEnum,
   message: z
     .string()
-    .optional()
-    .transform((v) => (v ? sanitizeText(v, 2000) : ""))
-    .pipe(z.string().max(2000)),
+    .transform((v) => sanitizeText(v, 2000))
+    .pipe(
+      z
+        .string()
+        .min(10, "Please add a brief message (at least 10 characters)")
+        .max(2000, "Message is too long"),
+    ),
   /** Honeypot — must stay empty. Real bots fill hidden fields. */
   website: z.string().max(0).optional().default(""),
 });

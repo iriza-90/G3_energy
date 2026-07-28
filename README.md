@@ -57,8 +57,10 @@ src/
 
 The contact form posts to `/api/contact`, which sends mail through [Resend](https://resend.com).
 
+### Quick start (testing)
+
 1. Create a free Resend account and an API key  
-2. Set these environment variables (local `.env.local` and/or Vercel):
+2. Copy `.env.example` to `.env.local` and set:
 
 ```bash
 RESEND_API_KEY=re_xxxx
@@ -66,6 +68,30 @@ CONTACT_TO_EMAIL=you@yourdomain.com
 RESEND_FROM_EMAIL=G3 Energy <onboarding@resend.dev>
 ```
 
-3. For production, verify your domain in Resend and switch `RESEND_FROM_EMAIL` to something like `G3 Energy <noreply@g3energy.com>`
+3. With `onboarding@resend.dev`, Resend only delivers to the email on your Resend account — fine for testing.
 
-Until those vars are set, the form shows an error instead of a fake “sent” success.
+### Production (custom domain)
+
+Before pointing **g3energy.com** at Vercel:
+
+1. In [Resend → Domains](https://resend.com/domains), add **g3energy.com** and add the DNS records they provide (SPF, DKIM, optional DMARC).
+2. Set these in Vercel (and `.env.local` if testing locally):
+
+```bash
+RESEND_API_KEY=re_xxxx
+RESEND_FROM_EMAIL=G3 Energy International <noreply@g3energy.com>
+CONTACT_TO_EMAIL=info@g3energy.com
+CONTACT_PARTNERSHIP_EMAIL=partnerships@g3energy.com
+CONTACT_AUTO_REPLY=true
+```
+
+3. Redeploy after saving env vars.
+
+### What gets sent
+
+| Email | Recipient | Purpose |
+|-------|-----------|---------|
+| Team notification | `CONTACT_TO_EMAIL` or `CONTACT_PARTNERSHIP_EMAIL` for investment enquiries | Full enquiry details; **Reply** goes to the visitor |
+| Auto-reply | Visitor's email | Confirmation that the message was received |
+
+Until `RESEND_API_KEY` and `CONTACT_TO_EMAIL` are set, the form shows a clear error with a mailto fallback instead of a fake success.

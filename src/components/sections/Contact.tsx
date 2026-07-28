@@ -9,13 +9,33 @@ import { contactSchema } from "@/lib/validations";
 
 type Status = "idle" | "loading" | "success" | "error";
 
+type SubmitResponse = {
+  ok?: boolean;
+  autoReplySent?: boolean;
+  error?: string;
+  fallbackEmail?: string;
+};
+
 export function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [fallbackEmail, setFallbackEmail] = useState<string | null>(null);
+  const [successNote, setSuccessNote] = useState<string | null>(null);
+
+  function resetFeedback() {
+    if (status === "success" || status === "error") {
+      setStatus("idle");
+      setError(null);
+      setFallbackEmail(null);
+      setSuccessNote(null);
+    }
+  }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
+    setFallbackEmail(null);
+    setSuccessNote(null);
 
     const form = e.currentTarget;
     const data = new FormData(form);
@@ -46,12 +66,19 @@ export function Contact() {
         body: JSON.stringify(parsed.data),
       });
 
+      const body = (await res.json().catch(() => null)) as SubmitResponse | null;
+
       if (!res.ok) {
-        const body = (await res.json().catch(() => null)) as { error?: string } | null;
+        setFallbackEmail(body?.fallbackEmail ?? SITE.email);
         throw new Error(body?.error ?? "Something went wrong. Please try again.");
       }
 
       setStatus("success");
+      setSuccessNote(
+        body?.autoReplySent
+          ? "We've sent a confirmation to your email. We'll reply within 2 business days."
+          : "We'll reply within 2 business days.",
+      );
       form.reset();
     } catch (err) {
       setStatus("error");
@@ -89,7 +116,9 @@ export function Contact() {
               <div>
                 <strong>Email</strong>
                 <span>
-                  {SITE.email} · {SITE.partnershipsEmail}
+                  <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+                  {" · "}
+                  <a href={`mailto:${SITE.partnershipsEmail}`}>{SITE.partnershipsEmail}</a>
                 </span>
               </div>
             </li>
@@ -128,27 +157,27 @@ export function Contact() {
             <div className="form-row">
               <div className="field">
                 <label htmlFor="firstName">First Name</label>
-                <input id="firstName" name="firstName" type="text" placeholder="First name" required maxLength={80} autoComplete="given-name" />
+                <input id="firstName" name="firstName" type="text" placeholder="First name" required maxLength={80} autoComplete="given-name" onChange={resetFeedback} />
               </div>
               <div className="field">
                 <label htmlFor="lastName">Last Name</label>
-                <input id="lastName" name="lastName" type="text" placeholder="Last name" required maxLength={80} autoComplete="family-name" />
+                <input id="lastName" name="lastName" type="text" placeholder="Last name" required maxLength={80} autoComplete="family-name" onChange={resetFeedback} />
               </div>
             </div>
 
             <div className="field">
               <label htmlFor="email">Email Address</label>
-              <input id="email" name="email" type="email" placeholder="your@email.com" required maxLength={254} autoComplete="email" />
+              <input id="email" name="email" type="email" placeholder="your@email.com" required maxLength={254} autoComplete="email" onChange={resetFeedback} />
             </div>
 
             <div className="field">
               <label htmlFor="organisation">Organisation</label>
-              <input id="organisation" name="organisation" type="text" placeholder="Company / Institution" maxLength={120} autoComplete="organization" />
+              <input id="organisation" name="organisation" type="text" placeholder="Company / Institution" maxLength={120} autoComplete="organization" onChange={resetFeedback} />
             </div>
 
             <div className="field">
               <label htmlFor="enquiryType">Enquiry Type</label>
-              <select id="enquiryType" name="enquiryType" defaultValue={ENQUIRY_TYPES[0]}>
+              <select id="enquiryType" name="enquiryType" defaultValue={ENQUIRY_TYPES[0]} onChange={resetFeedback}>
                 {ENQUIRY_TYPES.map((type) => (
                   <option key={type} value={type}>
                     {type}
@@ -159,15 +188,27 @@ export function Contact() {
 
             <div className="field">
               <label htmlFor="message">Message</label>
-              <textarea id="message" name="message" rows={4} placeholder="Tell us about your interest or project..." maxLength={2000} />
+              <textarea id="message" name="message" rows={4} placeholder="Tell us about your interest or project..." required minLength={10} maxLength={2000} onChange={resetFeedback} />
             </div>
 
-            {error ? <p className="form-error" role="alert">{error}</p> : null}
-            {status === "success" ? (
-              <p className="form-success" role="status">
-                Message sent. We&apos;ll be in touch soon.
-              </p>
-            ) : null}
+            <div aria-live="polite">
+              {error ? (
+                <div className="form-error" role="alert">
+                  <p>{error}</p>
+                  {fallbackEmail ? (
+                    <p className="form-fallback">
+                      Or email us directly at{" "}
+                      <a href={`mailto:${fallbackEmail}`}>{fallbackEmail}</a>
+                    </p>
+                  ) : null}
+                </div>
+              ) : null}
+              {status === "success" ? (
+                <p className="form-success" role="status">
+                  Thank you — your message was sent. {successNote}
+                </p>
+              ) : null}
+            </div>
 
             <button
               type="submit"
