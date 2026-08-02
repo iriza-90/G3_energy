@@ -15,9 +15,8 @@ export const SITE = {
     "A trusted African IPP delivering clean energy that powers economic transformation across the continent.",
   mission:
     "Bankable utility-scale solar that delivers competitive power to national utilities and lasting benefit to host communities.",
-  email: "info@g3energy.com",
-  partnershipsEmail: "partnerships@g3energy.com",
-  website: "www.g3energy.com",
+  email: "info@g3energy.eco",
+  website: "www.g3energy.eco",
   location: "Kigali, Rwanda",
   registered: "Rwanda Development Board (RDB), Kigali",
   partnerLine:

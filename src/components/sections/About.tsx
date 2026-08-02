@@ -78,10 +78,6 @@ export function About() {
               <p>{SITE.mission}</p>
             </div>
           </div>
-
-          <p className="about-meta">
-            {SITE.legalName} · {SITE.registered}
-          </p>
         </Reveal>
       </Container>
     </section>

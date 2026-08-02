@@ -20,17 +20,11 @@ function parseEmailList(value: string | undefined): string[] {
     .filter(Boolean);
 }
 
-/** Resolve team inbox(es) from enquiry type and env vars. */
+/** Resolve team inbox(es) from env vars. */
 export function resolveRecipients(data: ContactInput): ResolvedRecipients {
-  const defaultInbox = process.env.CONTACT_TO_EMAIL?.trim() || SITE.email;
-  const partnershipInbox =
-    process.env.CONTACT_PARTNERSHIP_EMAIL?.trim() || SITE.partnershipsEmail;
+  const inbox = process.env.CONTACT_TO_EMAIL?.trim() || SITE.email;
   const ccList = parseEmailList(process.env.CONTACT_CC_EMAIL);
-
-  const isPartnership = data.enquiryType === "Investment Partnership";
-  const primary = isPartnership ? partnershipInbox : defaultInbox;
-
-  const to = [primary, ...ccList.filter((email) => email !== primary)];
+  const to = [inbox, ...ccList.filter((email) => email !== inbox)];
 
   return {
     to: [...new Set(to)],

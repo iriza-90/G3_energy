@@ -117,8 +117,6 @@ export function Contact() {
                 <strong>Email</strong>
                 <span>
                   <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
-                  {" · "}
-                  <a href={`mailto:${SITE.partnershipsEmail}`}>{SITE.partnershipsEmail}</a>
                 </span>
               </div>
             </li>

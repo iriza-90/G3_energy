@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: `%s · ${SITE.name}`,
   },
   description: SITE.description,
-  metadataBase: new URL("https://www.g3energy.com"),
+  metadataBase: new URL("https://www.g3energy.eco"),
   openGraph: {
     title: `${SITE.name} — Powering Africa's Future`,
     description: SITE.description,

@@ -72,16 +72,15 @@ RESEND_FROM_EMAIL=G3 Energy <onboarding@resend.dev>
 
 ### Production (custom domain)
 
-Before pointing **g3energy.com** at Vercel:
+Before pointing **g3energy.eco** at Vercel:
 
-1. In [Resend → Domains](https://resend.com/domains), add **g3energy.com** and add the DNS records they provide (SPF, DKIM, optional DMARC).
+1. In [Resend → Domains](https://resend.com/domains), add **g3energy.eco** and add the DNS records they provide (SPF, DKIM, optional DMARC).
 2. Set these in Vercel (and `.env.local` if testing locally):
 
 ```bash
 RESEND_API_KEY=re_xxxx
-RESEND_FROM_EMAIL=G3 Energy International <noreply@g3energy.com>
-CONTACT_TO_EMAIL=info@g3energy.com
-CONTACT_PARTNERSHIP_EMAIL=partnerships@g3energy.com
+RESEND_FROM_EMAIL=G3 Energy International <noreply@g3energy.eco>
+CONTACT_TO_EMAIL=info@g3energy.eco
 CONTACT_AUTO_REPLY=true
 ```
 
@@ -91,7 +90,7 @@ CONTACT_AUTO_REPLY=true
 
 | Email | Recipient | Purpose |
 |-------|-----------|---------|
-| Team notification | `CONTACT_TO_EMAIL` or `CONTACT_PARTNERSHIP_EMAIL` for investment enquiries | Full enquiry details; **Reply** goes to the visitor |
+| Team notification | `CONTACT_TO_EMAIL` | Full enquiry details; **Reply** goes to the visitor |
 | Auto-reply | Visitor's email | Confirmation that the message was received |
 
 Until `RESEND_API_KEY` and `CONTACT_TO_EMAIL` are set, the form shows a clear error with a mailto fallback instead of a fake success.
